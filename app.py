@@ -8,6 +8,8 @@ st.title("🏥 NAMAF Claim Verification App")
 rules_file = st.file_uploader("Upload NAMAF Rules CSV", type=["csv"])
 claims_file = st.file_uploader("Upload Claims Excel File", type=["xlsx", "xls"])
 
+st.write("📄 Columns in rules_df:", rules_df.columns.tolist())
+
 if rules_file and claims_file:
     rules_df = pd.read_csv(rules_file)
     claims_df = pd.read_excel(claims_file)
@@ -20,7 +22,7 @@ if rules_file and claims_file:
         invoice = row.get('Invoice Number', 'Unknown')
         service_date = row.get('Service Date', 'Unknown')
 
-        match = rules_df[rules_df['Code'].astype(str).str.strip() == code]
+        match = rules_df[rules_df['Item code'].astype(str).str.strip() == code]
 
         if match.empty:
             reasons.append("Invalid code")
